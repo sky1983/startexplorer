@@ -90,8 +90,7 @@ public class DesktopEnvironmentAutoDetecter
   {
     try
     {
-      if (checkProcessNames("gnome-session")
-          || checkProcessNames("cinnamon-session"))
+      if (checkProcessNames("gnome-session","cinnamon-session","gnome-session-binary"))
       {
         return isItLinuxMintOrUbuntuOrWhat();
       }
