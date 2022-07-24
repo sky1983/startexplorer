@@ -1,6 +1,6 @@
 package de.bastiankrol.startexplorer.crossplatform;
 
-import static de.bastiankrol.startexplorer.Activator.*;
+import static de.bastiankrol.startexplorer.Activator.getLogFacility;
 
 import java.io.File;
 import java.io.IOException;
@@ -49,6 +49,7 @@ class RuntimeExecDelegate implements IRuntimeExecDelegate
    * @see de.bastiankrol.startexplorer.crossplatform.IRuntimeExecDelegate#exec(java.lang.String,
    *      java.io.File, boolean)
    */
+  @Override
   public void exec(String[] cmdArray, File workingDirectory, boolean isWindows)
   {
     logCommand(cmdArray, workingDirectory);
@@ -57,6 +58,9 @@ class RuntimeExecDelegate implements IRuntimeExecDelegate
       if (!isWindows)
       {
         this.getRuntime().exec(cmdArray, null, workingDirectory);
+        // this.getRuntime().exec(
+        // "dde-file-manager -n
+        // /home/sky198/developer/workspace/runtime-EclipseApplication/test/src/test");
       }
       else
       {
@@ -67,18 +71,40 @@ class RuntimeExecDelegate implements IRuntimeExecDelegate
     }
     catch (IOException e)
     {
-      StringBuilder builder = new StringBuilder();
-      builder.append("The command could not be executed.");
-      builder.append("\n");
-      if (e.getMessage() != null)
-      {
-        builder.append(" Message: ");
-        builder.append(e.getMessage());
-        builder.append("\n");
-      }
-      this.messageDialogHelper.displayErrorMessage(
-          "Command could not be executed", builder.toString());
+      alertMsg(e);
     }
+  }
+
+  @Override
+  public void exec(String[] cmdArray, File workingDirectory)
+  {
+    logCommand(cmdArray, workingDirectory);
+    try
+    {
+      // deepin 的文件管理器使用命令拼接的方式打开目录，目前未提供打开选中文件的选项
+      StringBuilder command = new StringBuilder(cmdArray[0]);
+      command.append(" ").append(workingDirectory.getPath());
+      this.getRuntime().exec(command.toString());
+    }
+    catch (IOException e)
+    {
+      alertMsg(e);
+    }
+  }
+
+  private void alertMsg(IOException e)
+  {
+    StringBuilder builder = new StringBuilder();
+    builder.append("The command could not be executed.");
+    builder.append("\n");
+    if (e.getMessage() != null)
+    {
+      builder.append(" Message: ");
+      builder.append(e.getMessage());
+      builder.append("\n");
+    }
+    this.messageDialogHelper.displayErrorMessage(
+        "Command could not be executed", builder.toString());
   }
 
   private void logCommand(String[] cmdArray, File workingDirectory)
@@ -94,11 +120,10 @@ class RuntimeExecDelegate implements IRuntimeExecDelegate
     {
       cmd.setLength(cmd.length() - 1);
     }
-    getLogFacility().logDebug(
-        "Executing command <"
-            + cmd
-            + "> in working directory <"
+    getLogFacility()
+        .logDebug("Executing command <" + cmd + "> in working directory <"
             + (workingDirectory != null ? workingDirectory.getAbsolutePath()
-                : "null") + ">.");
+                : "null")
+            + ">.");
   }
 }

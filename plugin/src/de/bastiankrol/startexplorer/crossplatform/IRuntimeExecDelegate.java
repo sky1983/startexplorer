@@ -19,4 +19,6 @@ public interface IRuntimeExecDelegate
    */
   public void exec(String[] cmdArray, File workingDirectory, boolean isWindows);
 
+  void exec(String[] cmdArray, File workingDirectory);
+
 }

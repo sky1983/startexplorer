@@ -16,6 +16,7 @@ public enum DesktopEnvironment
   LINUX_XFCE(OperatingSystem.LINUX, "Xfce"), //
   LINUX_LXDE(OperatingSystem.LINUX, "LXDE"), //
   LINUX_MATE(OperatingSystem.LINUX, "MATE"), //
+  LINUX_DEEPIN(OperatingSystem.LINUX, "DEEPIN"), // deepin linux
   LINUX_UNKNOWN(OperatingSystem.LINUX, "Unknown"), //
   MAC_OS(OperatingSystem.MAC_OS), //
   MAC_OS_ITERM(OperatingSystem.MAC_OS, "iTerm"), //

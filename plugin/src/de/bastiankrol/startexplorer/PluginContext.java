@@ -91,18 +91,18 @@ public class PluginContext
   {
     if (this.getPreferenceModel().isAutoDetectDesktopEnvironment())
     {
-      this.runtimeExecCalls = chooseRuntimeExecCalls(DesktopEnvironmentAutoDetecter
-          .findDesktopEnvironment());
+      this.runtimeExecCalls = chooseRuntimeExecCalls(
+          DesktopEnvironmentAutoDetecter.findDesktopEnvironment());
     }
     else if (this.getPreferenceModel().isUseCustomeDesktopEnvironment())
     {
-      this.runtimeExecCalls = RuntimeExecCallsFactory.custom(this
-          .getPreferenceModel().getCustomDesktopEnvironmentContainer());
+      this.runtimeExecCalls = RuntimeExecCallsFactory.custom(
+          this.getPreferenceModel().getCustomDesktopEnvironmentContainer());
     }
     else
     {
-      this.runtimeExecCalls = chooseRuntimeExecCalls(this.getPreferenceModel()
-          .getSelectedDesktopEnvironment());
+      this.runtimeExecCalls = chooseRuntimeExecCalls(
+          this.getPreferenceModel().getSelectedDesktopEnvironment());
     }
   }
 
@@ -131,6 +131,8 @@ public class PluginContext
         return RuntimeExecCallsFactory.linuxLxde();
       case LINUX_MATE:
         return RuntimeExecCallsFactory.linuxMate();
+      case LINUX_DEEPIN:
+        return RuntimeExecCallsFactory.linuxDeepin();
       case MAC_OS:
         return RuntimeExecCallsFactory.macOs();
       case MAC_OS_ITERM:
@@ -140,8 +142,8 @@ public class PluginContext
       case UNKNOWN:
         return RuntimeExecCallsFactory.unsupported();
       default:
-        throw new IllegalArgumentException("Unknown desktop environment: "
-            + desktopEnvironment);
+        throw new IllegalArgumentException(
+            "Unknown desktop environment: " + desktopEnvironment);
     }
   }
 

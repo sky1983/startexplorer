@@ -110,6 +110,10 @@ public class DesktopEnvironmentAutoDetecter
       {
         return DesktopEnvironment.LINUX_MATE;
       }
+      if (checkProcessNames("dde-desktop","dde-system-daemon"))
+      {
+        return DesktopEnvironment.LINUX_DEEPIN;
+      }
       return DesktopEnvironment.LINUX_UNKNOWN;
     }
     catch (IOException e)

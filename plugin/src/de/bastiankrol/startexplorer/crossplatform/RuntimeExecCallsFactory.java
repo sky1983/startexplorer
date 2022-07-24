@@ -52,6 +52,11 @@ public class RuntimeExecCallsFactory
     return new RuntimeExecCallsMate();
   }
 
+  public static RuntimeExecCallsDeepin linuxDeepin()
+  {
+    return new RuntimeExecCallsDeepin();
+  }
+
   public static RuntimeExecCallsMacOs macOs()
   {
     return new RuntimeExecCallsMacOs();
